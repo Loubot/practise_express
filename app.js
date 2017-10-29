@@ -20,6 +20,7 @@ var fs = require('fs');
 
 
 var app = express();
+var api = express()
 app.use(passport.initialize());
 
 
@@ -28,6 +29,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
+
+
 
 var models = require('./models')
 
@@ -42,10 +45,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+app.use('/api', api)
 fs.readdirSync('./controllers').forEach(function (file) {
     if(file.substr(-3) == '.js') {
         route = require('./controllers/' + file);
-        route.controller( app, passport, passportJWT, ExtractJwt, JwtStrategy, jwt );
+        route.controller( api, passport, passportJWT, ExtractJwt, JwtStrategy, jwt );
     }
 });
 

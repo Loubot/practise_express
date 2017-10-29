@@ -7,23 +7,22 @@ module.exports.controller = function( app, passport, passportJWT, ExtractJwt, Jw
     
     console.log('user');
 
-    app.get('/api/user', function( req, res ) {
+    app.get('/user', function( req, res ) {
         passport.authenticate( 'jwt', { session: false }), function( req, res ) {
-            console.log("222222222222222")
-                console.log( req.query.id )
-                models.User.findOne({
-                    where: { id: req.query.id }
-                }).then( user => {
-                    res.json( user )
-                })
-            }( req, res)
+            
+            models.User.findOne({
+                where: { id: req.query.id }
+            }).then( user => {
+                res.json( user )
+            })
+        }( req, res )
     })
     
-    app.get('/user', function( req, res ) {
-        models.User.findAll().then( function( users ) {
-            console.log( JSON.stringify( users ) );
-            res.send( users );
-        })
+    // app.get('/user', function( req, res ) {
+    //     models.User.findAll().then( function( users ) {
+    //         console.log( JSON.stringify( users ) );
+    //         res.send( users );
+    //     })
         
-    })
+    // })
 }
