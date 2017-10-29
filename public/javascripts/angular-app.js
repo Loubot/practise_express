@@ -12,7 +12,7 @@ app.config( [ "$stateProvider" , "$urlRouterProvider", "$locationProvider",
     function( $stateProvider, $urlRouterProvider, $locationProvider ) {
 
         $locationProvider.html5Mode({ enabled: true, requireBase: false });
-        $stateProvider.state("contacts", {
+        $stateProvider.state("home", {
             url: "/",
             controller: "staticController" 
         })
