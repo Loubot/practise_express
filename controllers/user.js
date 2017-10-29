@@ -7,7 +7,7 @@ module.exports.controller = function( app, passport, passportJWT, ExtractJwt, Jw
     
     console.log('user');
 
-    app.get('/user', function( req, res ) {
+    app.get('/api/user', function( req, res ) {
         passport.authenticate( 'jwt', { session: false }), function( req, res ) {
             
             models.User.findOne({

@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html ng-app="practise-app">
+<html >
   <head>
-    <title><%= title %></title>
+    <title></title>
     <script type="text/javascript" src="/angular/angular.js"></script>
     <script type="text/javascript" src="/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="/angular-aria/angular-aria.min.js"></script>
     <script type="text/javascript" src="/angular-messages/angular-messages.min.js"></script>
     <script type="text/javascript" src="/angular-material/angular-material.min.js"></script>
+    <script type="text/javascript" src="/angular-ui-router/release/angular-ui-router.min.js"></script>
 
     <script type="text/javascript" src="/javascripts/angular-app.js"></script>
+    <script type="text/javascript" src="/javascripts/controllers/static_controller.js"></script>
+    
 
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <body ng-app="practise_app">
+        <div ui-view ng-cloak> </div>
   </body>
 </html>
