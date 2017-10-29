@@ -18,7 +18,7 @@ module.exports.controller = function( app, passport, passportJWT, ExtractJwt, Jw
                 // console.log( user )
                 var payload = { id: user.id }
                 var token = jwt.sign( payload, strategy.strategy_options().secretOrKey );
-                res.json( { success: true, token: token } )
+                res.json( { success: true, token: token, data: payload } )
             }
             
         })

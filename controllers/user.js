@@ -9,11 +9,15 @@ module.exports.controller = function( app, passport, passportJWT, ExtractJwt, Jw
 
     app.get('/api/user', function( req, res ) {
         passport.authenticate( 'jwt', { session: false }), function( req, res ) {
-                res.json('Reached')
+            console.log("222222222222222")
+                console.log( req.query.id )
+                models.User.findOne({
+                    where: { id: req.query.id }
+                }).then( user => {
+                    res.json( user )
+                })
             }( req, res)
     })
-
-   
     
     app.get('/user', function( req, res ) {
         models.User.findAll().then( function( users ) {
@@ -21,5 +25,5 @@ module.exports.controller = function( app, passport, passportJWT, ExtractJwt, Jw
             res.send( users );
         })
         
-    });
+    })
 }
