@@ -4,6 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+
+var passport = require("passport");
+var passportJWT = require("passport-jwt");
+var ExtractJwt = passportJWT.ExtractJwt;
+var JwtStrategy = passportJWT.Strategy;
+
 var sassMiddleware = require('node-sass-middleware');
 var fs = require('fs');
 
@@ -28,7 +35,7 @@ app.set('view engine', 'ejs');
 fs.readdirSync('./controllers').forEach(function (file) {
     if(file.substr(-3) == '.js') {
         route = require('./controllers/' + file);
-        route.controller(app);
+        route.controller( app, passport, passportJWT, ExtractJwt, JwtStrategy );
     }
 });
 
