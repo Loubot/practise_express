@@ -5,7 +5,7 @@ var models = require('../models');
 
 module.exports.controller = function( app, passport, passportJWT, ExtractJwt, JwtStrategy ) {
     var jwtOptions = {}
-    jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
+    jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
     jwtOptions.secretOrKey = '34543534543';
     console.log('user');
     

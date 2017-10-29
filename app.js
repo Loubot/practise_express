@@ -18,6 +18,12 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+app.use(passport.initialize());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(bodyParser.json());
 
 var models = require('./models')
 
