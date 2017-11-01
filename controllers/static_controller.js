@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports.controller = function( app, passport, passportJWT, ExtractJwt, JwtStrategy, jwt ){
+module.exports.controller = function( app, jwt ){
     app.get('/', function( req, res ) {
         res.render('index');
     })

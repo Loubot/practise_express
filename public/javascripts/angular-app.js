@@ -18,6 +18,12 @@ app.config( [ "$stateProvider" , "$urlRouterProvider", "$locationProvider",
             controller: "staticController",
             templateUrl: "../angular-views/static-views/index.html"
         })
+
+        $stateProvider.state("user", {
+            url: "/user/{ id }",
+            controller: "userController",
+            templateUrl: "../angular-views/user-views/user.html"
+        })
     }
 ])
 

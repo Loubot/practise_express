@@ -8,20 +8,16 @@ var winston = require('./config/winston_config').load_winston()
 
 
 var passport = require("passport");
-var passportJWT = require("passport-jwt");
-var ExtractJwt = passportJWT.ExtractJwt;
-var JwtStrategy = passportJWT.Strategy;
+
 var jwt = require('jsonwebtoken');
 
 var strategy = require('./config/strategy') 
-passport.use(strategy.passport_strategy());
 
 var sassMiddleware = require('node-sass-middleware');
 var fs = require('fs');
 
 
 var app = express();
-app.use(passport.initialize());
 
 
 app.use(bodyParser.urlencoded({
@@ -47,7 +43,7 @@ app.set('view engine', 'ejs');
 fs.readdirSync('./controllers').forEach(function (file) {
     if(file.substr(-3) == '.js') {
         route = require('./controllers/' + file);
-        route.controller( app, passport, passportJWT, ExtractJwt, JwtStrategy, jwt );
+        route.controller( app, jwt );
     }
 });
 
