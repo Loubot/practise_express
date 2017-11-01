@@ -2,6 +2,7 @@
 
 var models = require( '../models' )
 var strategy = require( '../config/strategy')
+var winston = require('winston')
 // var helper = require('../helpers/controllers/authentication_controller_helper')
 
 module.exports.controller = function( app, passport, passportJWT, ExtractJwt, JwtStrategy, jwt ){
@@ -9,6 +10,7 @@ module.exports.controller = function( app, passport, passportJWT, ExtractJwt, Jw
 
     app.post( '/login', function( req, res ) {
         console.log( req.query )
+        winston.debug( req.query )
         models.User.findOne({
             where: { email: req.query.email } 
         }).then( user => {
