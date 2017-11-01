@@ -12,9 +12,11 @@ app.config( [ "$stateProvider" , "$urlRouterProvider", "$locationProvider",
     function( $stateProvider, $urlRouterProvider, $locationProvider ) {
 
         $locationProvider.html5Mode({ enabled: true, requireBase: false });
+        
         $stateProvider.state("home", {
             url: "/",
-            controller: "staticController" 
+            controller: "staticController",
+            templateUrl: "../angular-views/static-views/index.html"
         })
     }
 ])

@@ -1,0 +1,19 @@
+<div class="big_gutter">
+    <form layout="column" layout-padding ng-submit="login_form.$valid && login()" name="login_form">
+
+        <md-input-container>
+            <label>Email</label>
+            <input type="email" name="email" ng-model="user.email">
+        </md-input-container>
+
+        <md-input-container>
+            <label>Password</label>
+            <input type="password" name="email" ng-model="user.password">
+        </md-input-container>
+        
+        <md-input-container>
+            <input type="submit" class="md-button md-primary md-raised" name="submit" value="Log in" aria-label="login">
+        </md-input-container>
+    </form>
+
+</div>
