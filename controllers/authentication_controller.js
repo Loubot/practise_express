@@ -24,11 +24,19 @@ module.exports.controller = function( app,  jwt ){
                 
                 var payload = { id: user.id }
                 jwt.sign({ id: user.id }, strategy.strategy_options().secretOrKey , function(err, token) {
-                  winston.debug( 'token created ' )
-                  // winston.debug( res )
-                  
-                  winston.debug( token )
-                  res.json( { success: true, token: token } )
+
+                    if ( err ) {
+                        winston.debug( "Failed to create token" )
+                        res.json( err )
+                        return
+                    } else {
+                        winston.debug( 'token created ' )
+                        // winston.debug( res )
+                        
+                        winston.debug( token )
+                        res.json( { success: true, token: token } )
+                    }
+                 
                 });
                 // var token = jwt.sign( payload, strategy.strategy_options().secretOrKey );
 

@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var winston = require('./config/winston_config').load_winston()
 
 
-var passport = require("passport");
 
 var jwt = require('jsonwebtoken');
 
@@ -40,11 +39,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+/* Include all express controllers */
 fs.readdirSync('./controllers').forEach(function (file) {
     if(file.substr(-3) == '.js') {
         route = require('./controllers/' + file);
         route.controller( app, jwt );
     }
+});
+
+/* Put catch all route after controller declaration. This preserves /api/* functionality*/
+app.get('/[^\.]+$', function(req, res){
+    res.render( 'index' );
 });
 
 // uncomment after placing your favicon in /public
