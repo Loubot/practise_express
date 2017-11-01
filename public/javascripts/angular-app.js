@@ -20,7 +20,7 @@ app.config( [ "$stateProvider" , "$urlRouterProvider", "$locationProvider",
         })
 
         $stateProvider.state("user", {
-            url: "/user/{ id }",
+            url: "/user",
             controller: "userController",
             templateUrl: "../angular-views/user-views/user.html"
         })

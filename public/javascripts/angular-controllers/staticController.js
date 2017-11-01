@@ -21,7 +21,7 @@ angular.module('practise_app').controller('staticController', ['$scope','$http',
         }).then(function(res) {
           console.log(res)
           window.localStorage.setItem( 'token', res.data.token )
-
+          $state.go( 'user', { id: res.data.id })
         }).catch(function(err_result) {
           console.log(err_result);
         });
