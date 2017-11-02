@@ -5,12 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var winston = require('./config/winston_config').load_winston()
+var passport = require("passport"); 
 
 
+var jwt = require("jwt-simple")
 
-var jwt = require('jsonwebtoken');
-
-var strategy = require('./config/strategy')() 
+var strategy = require('./config/strategy')( passport )
 
 var sassMiddleware = require('node-sass-middleware');
 var fs = require('fs');
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use(bodyParser.json());
+app.use( strategy.initialise() )
 
 
 var models = require('./models')
@@ -44,7 +44,7 @@ app.set('view engine', 'ejs');
 fs.readdirSync('./controllers').forEach(function (file) {
     if(file.substr(-3) == '.js') {
         route = require('./controllers/' + file);
-        route.controller( app, jwt );
+        route.controller( app, jwt, strategy );
     }
 });
 

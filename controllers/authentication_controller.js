@@ -2,16 +2,16 @@
 
 var models = require( '../models' )
 var winston = require('winston') 
-var config = require("../config/strategyConfig")
+var cfg = require("../config/strategyConfig")
 // var helper = require('../helpers/controllers/authentication_controller_helper')
 
-module.exports.controller = function( app,  jwt ){
+module.exports.controller = function( app,  jwt, strategy ){
     console.log( 'Authentication controller' )
     
 
     app.post( '/login', function( req, res ) {
-        winston.debug( "Authentication query" )
-        // winston.debug( req.body )
+        winston.debug( "Login query" )
+        winston.debug( req.body )
 
         models.User.findOne({
             where: { email: req.body.email } 
@@ -22,7 +22,7 @@ module.exports.controller = function( app,  jwt ){
                 // console.log( user )
                 var payload = user.id
 
-                var token = jwt.sign( payload, config.secretOrKey )
+                var token = jwt.encode(payload, cfg.jwtSecret);
                 res.json( token )
                 
                 // var token = jwt.sign( payload, strategy.strategy_options().secretOrKey );
