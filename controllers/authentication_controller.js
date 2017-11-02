@@ -1,9 +1,8 @@
 'use strict'
 
 var models = require( '../models' )
-var strategy = require( '../config/strategy')
-var winston = require('winston')
-var strategy = require('../config/strategy') 
+var winston = require('winston') 
+var config = require("../config/strategyConfig")
 // var helper = require('../helpers/controllers/authentication_controller_helper')
 
 module.exports.controller = function( app,  jwt ){
@@ -12,7 +11,7 @@ module.exports.controller = function( app,  jwt ){
 
     app.post( '/login', function( req, res ) {
         winston.debug( "Authentication query" )
-        winston.debug( req.body )
+        // winston.debug( req.body )
 
         models.User.findOne({
             where: { email: req.body.email } 
@@ -21,23 +20,11 @@ module.exports.controller = function( app,  jwt ){
                 res.status( 401 ).json( { success: false, message: "Could not find user" } )
             } else if ( user ) {
                 // console.log( user )
-                
-                var payload = { id: user.id }
-                jwt.sign({ id: user.id }, strategy.strategy_options().secretOrKey , function(err, token) {
+                var payload = user.id
 
-                    if ( err ) {
-                        winston.debug( "Failed to create token" )
-                        res.json( err )
-                        return
-                    } else {
-                        winston.debug( 'token created ' )
-                        // winston.debug( res )
-                        
-                        winston.debug( token )
-                        res.json( { success: true, token: token } )
-                    }
-                 
-                });
+                var token = jwt.sign( payload, config.secretOrKey )
+                res.json( token )
+                
                 // var token = jwt.sign( payload, strategy.strategy_options().secretOrKey );
 
             }

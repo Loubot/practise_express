@@ -10,7 +10,7 @@ var winston = require('./config/winston_config').load_winston()
 
 var jwt = require('jsonwebtoken');
 
-var strategy = require('./config/strategy') 
+var strategy = require('./config/strategy')() 
 
 var sassMiddleware = require('node-sass-middleware');
 var fs = require('fs');

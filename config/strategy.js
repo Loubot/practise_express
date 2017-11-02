@@ -1,37 +1,42 @@
 'use strict'
-var passportJWT = require("passport-jwt");
-var JwtStrategy = passportJWT.Strategy;
-var ExtractJwt = passportJWT.ExtractJwt;
 
-module.exports = {
-    strategy_options: function() {
-        var jwtOptions = {}
-        jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-        jwtOptions.secretOrKey = '34543534543';
-
-        return jwtOptions;
-    },
+var passport = require("passport")
+var passportJWT = require( "passport-jwt" )
+var ExtractJwt  = passportJWT.ExtractJwt
+var Strategy = passportJWT.Strategy
+var models = require('../models')
+var config = require("./strategyConfig")
 
 
-    passport_strategy: function() {
-       var jwtOptions = {}
-       jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-       jwtOptions.secretOrKey = '34543534543';
 
-       var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-         console.log('payload received', jwt_payload);
-         // usually this would be a database call:
-         var user = users[_.findIndex(users, {id: jwt_payload.id})];
-         if (user) {
-           next(null, user);
-         } else {
-           next(null, false);
-         }
-       });
+var params = {  
+    secretOrKey: config.secretOrKey,
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+};
 
-       return strategy;
+
+module.exports = function() {
+    var strategy = new Strategy( params, function( payload, done ) {
+        var user = models.User.findOne( {
+            where: { id: payload.id }
+        }).then( user => {
+            if (user) {
+                return done(null, {
+                    id: user.id
+                });
+            } else {
+                return done(new Error("User not found"), null);
+            }
+        })
+    })
+
+    passport.use( strategy )
+    return {
+        initialize: function() {
+            return passport.initialize()
+        },
+        authenticate: function() {
+            return passport.authenticate("jwt", { session: false } )
+        }
     }
-    
-
-    
 }
