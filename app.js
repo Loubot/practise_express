@@ -18,6 +18,22 @@ var fs = require('fs');
 
 var app = express();
 
+/* S3 config*/
+var multer = require('multer')
+var multerS3 = require('multer-s3')
+var AWS = require('aws-sdk')
+AWS.config.loadFromPath("./config/s3_config.json")
+
+var s3 = new AWS.S3()
+
+
+s3.listBuckets({}, function (err, data) {
+    if (err) {
+        return res.send({ "error": err });
+    }
+    winston.debug({ data });
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
