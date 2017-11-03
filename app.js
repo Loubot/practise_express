@@ -17,14 +17,16 @@ var fs = require('fs');
 
 
 var app = express();
-
+var s3_config = require("./config/s3_config")
 /* S3 config*/
 var multer = require('multer')
 var multerS3 = require('multer-s3')
 var AWS = require('aws-sdk')
-AWS.config.loadFromPath("./config/s3_config.json")
+var config = new AWS.Config({
+  accessKeyId: s3_config.accessKeyId, secretAccessKey: s3_config.secretAccessKey, region: s3_config.region
+});
 
-var s3 = new AWS.S3()
+var s3 = new AWS.S3( config )
 
 
 s3.listBuckets({}, function (err, data) {
@@ -40,6 +42,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use( strategy.initialise() )
+
 
 
 var models = require('./models')
