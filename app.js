@@ -28,6 +28,11 @@ var config = new AWS.Config({
 
 var s3 = new AWS.S3( config )
 
+url = s3.getSignedUrl('putObject', { Bucket: 'express-practise', Key: s3_config.accessKeyId}, function( err, url ) {
+    console.log("url")
+    console.log(err)
+    console.log(url)
+})
 
 s3.listBuckets({}, function (err, data) {
     if (err) {
