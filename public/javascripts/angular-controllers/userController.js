@@ -7,7 +7,7 @@ angular.module('practise_app').controller( 'userController', [ '$scope', '$http'
         method: 'get',
         url: 'api/user',
         headers: {
-            'Authorization': window.localStorage.getItem( 'token' )
+            'Authorization': "Bearer " + window.localStorage.getItem( 'token' )
         }
     }).then(function(user) {
         console.log(user)

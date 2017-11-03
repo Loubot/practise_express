@@ -13,14 +13,14 @@ angular.module('practise_app').controller('staticController', ['$scope','$http',
 
         $http({
           method: 'POST',
+          'Content-Type': 'application/x-www-form-urlencoded',
           url: '/login',
           data: {
-            email: $scope.user.email,
-            password: $scope.user.password
+            email: $scope.user.email
           }
         }).then(function(res) {
           console.log(res)
-          window.localStorage.setItem( 'token', res.data.token )
+          window.localStorage.setItem( 'token', res.data )
           $state.go( 'user', { id: res.data.id })
         }).catch(function(err_result) {
           console.log(err_result);
